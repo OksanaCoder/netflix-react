@@ -12,7 +12,7 @@ class Registration extends Component {
             password: '',
             password_confirnation: '',
             registrationErrors: '',
-            isValid: true
+            isFiled: true
         }
         this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -40,7 +40,8 @@ class Registration extends Component {
     //   }
     render(){
         return ( 
-            <div className='container'>
+            <div className='container text-white'>
+                <h5 className='mb-4 mt-5'>Registration form</h5>
                  <Form  onSubmit={this.handleSubmit}>
                  <Form.Group controlId="formBasicPassword">
                     <Form.Label>Name</Form.Label>
@@ -109,13 +110,46 @@ class Registration extends Component {
                      required />
                 </Form.Group>
 
-                
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control 
+                     type='text' 
+                     name='city' 
+                     placeholder='City' 
+                     value={this.state.city} 
+                     onChange={this.handleChange} 
+                     required />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Postal Code</Form.Label>
+                    <Form.Control 
+                     type='number' 
+                     name='postalCode' 
+                     placeholder='Postal code' 
+                     value={this.state.postalCode} 
+                     onChange={this.handleChange} 
+                     required />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Credit card</Form.Label>
+                    <Form.Control 
+                     type='number' 
+                     name='creditCard' 
+                     placeholder='XXXX-XXXX-XXXX-XXXX' 
+
+                     value={this.state.creditCard} 
+                     onChange={this.handleChange} 
+                     required />
+                </Form.Group>
+
+               {this.state.isFiled &&  
+                
+                <Button variant="primary" type="submit" style={{display: 'block'}}>
                     Submit
                 </Button>
+                }
                 </Form>
               
                     
