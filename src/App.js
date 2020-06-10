@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Main from './components/Main';
+import Btn from './components/Btn';
+import Comments from './components/Comments';
+import Details from './components/Details';
 
-function App() {
-  return (
-    <div className="App">
-        <NavBar />
-        <Main title="TV Shows"/>
-    </div>
-  );
+import { BrowserRouter, Route  } from 'react-router-dom';
+
+class App extends Component {
+
+  state = {
+    text : '',
+    show: false
+  }
+  componentDidMount = () =>{
+    console.log('com meth');
+  }
+  buttonClick = () => {
+    this.setState({
+      text : 'something',
+      show: !this.state.show
+    })
+  }
+
+  componentDidUpdate = () => {
+    if(this.state == 'something else') {
+      this.setState({
+        text: this.state.text + ' else'
+      })
+    }
+  }
+  render () {
+   
+    return (
+     <BrowserRouter>
+          <NavBar />
+          <Route path="/" exact component={(props) => <Main title="TV Shows"/>}/>
+          <Route path="/comments" exact component={(props) => <Comments />}/>
+          <Route path="/details/:imdbID" exact component={(props) => <Details />}/>
+
+      </BrowserRouter>
+    );
+
+  }
+  
 }
 
 export default App;

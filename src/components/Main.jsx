@@ -8,8 +8,10 @@ class Main extends Component {
         genre : null,
         harryPotterMovies: [],
         spiderMovies: [],
-        starWarsMovies: []
-
+        starWarsMovies: [],
+        loading: true,
+        errMess: '',
+        movies: []
     }
 
     url = "http://www.omdbapi.com/?apikey=34fd8839";
@@ -49,6 +51,7 @@ class Main extends Component {
     // };
 
     render() {
+        console.log(this.props);
         return(
             <>
         <div className='container'>
