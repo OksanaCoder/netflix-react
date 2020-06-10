@@ -28,7 +28,21 @@ const NavBar = (props) => {
                 props.location.pathname === '/comments'
                   ? "nav-link active"
                   : "nav-link"}
-                  className='text-white'>Comments</Link>
+                  className='text-white mr-4'>Comments</Link>
+      <Link to='/registration'
+      className={
+        props.location.pathname === '/registration'
+        ? 'nav-link active'
+        : 'nav-link' }
+        className='text-white mr-4'>Registration</Link>
+      
+      <Link to='/login'
+      className={
+        props.location.pathname === '/login'
+        ? 'nav-link active'
+        : 'nav-link' }
+        className='text-white'>Log in</Link>
+      }            
     </Nav>
     <Form inline>
       <FormControl type="text" placeholder="Search" className="mr-sm-2" />

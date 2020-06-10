@@ -6,20 +6,24 @@ import RowOfItems from "./RowOfItems";
 
 class Details extends Component {
     state = {
-       movies: []
+       movie: {}
     }
     url = "http://www.omdbapi.com/?apikey=34fd8839";
 
     componentDidMount = () => {
+        console.log('props', this.props.match.params.imdbID)
         Promise.all([
-            fetch(this.url + '&s=harry%20potter' + this.props.imdbID)
+            fetch(this.url + '&i=' + this.props.match.params.imdbID)
             .then((response) => response.json())
+            .then((movie) => this.setState({movie: movie}))
            ])
             .catch((err) => {
                 console.log('An error occucred:', err);
             })
            
     }
+
+
    
     render () {
      
@@ -32,12 +36,12 @@ class Details extends Component {
                 <h5 style={{color: '#fff'}}>Details</h5>
              <Row>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
-        <img alt='movie img'></img>
+                   <img src={this.state.movie.Poster} alt='movie img'></img>
                  </div>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
                      <Card>
                          <Card.Body>
-            <Card.Title>{this.state.movies.Title}</Card.Title>
+                  <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.movie.Title}</Card.Title>
                              <form>
                                 <label>
                                     Leave your comment:

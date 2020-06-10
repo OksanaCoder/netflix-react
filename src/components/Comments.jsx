@@ -10,6 +10,31 @@ import React, { Component } from 'react';
      r: Math.floor(Math.random() * 10)
    })
    }
+
+
+//    let response = await fetch("https://striveschool.herokuapp.com/api/reg", {
+//     method: "POST",
+//     body: JSON.stringify(this.state.email),
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": "Basic dXNlcjIyOnlrZVpkQ1lOTHMyZHFiTWM="
+//     }
+//   });
+//   if (response.ok) {
+//     alert('email saved!');
+//     this.setState({
+//       email: ''                
+//     }
+//     );
+//   } else {
+//     let json = await response.json();
+//     this.setState({
+//       errMess: json.message,
+//       isLoading: false
+//     });
+  
+// }
+
     render() {
         return (
           <>

@@ -7,7 +7,8 @@ import Main from './components/Main';
 import Btn from './components/Btn';
 import Comments from './components/Comments';
 import Details from './components/Details';
-
+import Registration from './components/Registration';
+import Login from './components/Login';
 import { BrowserRouter, Route  } from 'react-router-dom';
 
 class App extends Component {
@@ -40,7 +41,9 @@ class App extends Component {
           <NavBar />
           <Route path="/" exact component={(props) => <Main title="TV Shows"/>}/>
           <Route path="/comments" exact component={(props) => <Comments />}/>
-          <Route path="/details/:imdbID" exact component={(props) => <Details />}/>
+          <Route path="/details/:imdbID" component={Details}/>
+          <Route path='/registration' exact component={Registration}/>
+          <Route path='/login' exact component={Login}/>
       </BrowserRouter>
     );
 
