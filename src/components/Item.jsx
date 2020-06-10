@@ -8,7 +8,7 @@ class Item extends Component {
         return(
             <>
             <div className='col-sm-4 col-md-2 col-lg-2 mt-3' key={this.props.data.imdbID}>
-            <Link to={'/details/' + this.props.data.imdbID}  
+            <Link to={'/details/:' + this.props.data.imdbID}  
          
             ><img
                 className='img-fluid item'

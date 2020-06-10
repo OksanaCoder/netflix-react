@@ -41,7 +41,6 @@ class App extends Component {
           <Route path="/" exact component={(props) => <Main title="TV Shows"/>}/>
           <Route path="/comments" exact component={(props) => <Comments />}/>
           <Route path="/details/:imdbID" exact component={(props) => <Details />}/>
-
       </BrowserRouter>
     );
 
