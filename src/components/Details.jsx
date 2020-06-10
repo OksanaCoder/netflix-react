@@ -22,7 +22,10 @@ class Details extends Component {
             })
            
     }
-
+    handleSubmit =  (event) => {
+        console.log('submitted');
+        event.preventDefault();
+    }
 
    
     render () {
@@ -41,8 +44,8 @@ class Details extends Component {
                  <div className='col-sm-12 col-md-6 col-lg-6'>
                      <Card>
                          <Card.Body>
-                  <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.movie.Title}</Card.Title>
-                             <form>
+                    <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.movie.Title}</Card.Title>
+                             <form onSubmit={this.handleSubmit}>
                                 <label>
                                     Leave your comment:
                                     <input type="text" name="name" className="ml-2"/>

@@ -10,9 +10,13 @@ class Registration extends Component {
             surname: '',
             email: '',
             password: '',
-            password_confirnation: '',
+            date: '',
+            address: '',
+            zip: '',
+            city: '',
+            creditCard: '',
             registrationErrors: '',
-            isFiled: true
+            isFiled: false
         }
         this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -20,7 +24,20 @@ class Registration extends Component {
     handleSubmit =  (event) => {
         console.log('submitted');
         event.preventDefault();
-    //       const { email, password, password_confirmation } = this.state;
+
+        this.setState({
+            [event.target.name] : event.target.value
+        })
+
+        if (
+            this.state.email.length !== 0 &&
+            this.state.name.length 
+        ) {
+            this.setState({
+                isFiled: true
+            })
+        }
+        //   const { email, password, password_confirmation } = this.state;
     //       localStorage.setItem('email', email);
     //       localStorage.setItem('password', password);
     //       localStorage.setItem('password_confirnation', password_confirmation);
@@ -122,18 +139,18 @@ class Registration extends Component {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Postal Code</Form.Label>
+                    <Form.Label>ZIP</Form.Label>
                     <Form.Control 
                      type='number' 
-                     name='postalCode' 
+                     name='zip' 
                      placeholder='Postal code' 
-                     value={this.state.postalCode} 
+                     value={this.state.zip} 
                      onChange={this.handleChange} 
                      required />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Credit card</Form.Label>
+                    <Form.Label>Credit card number</Form.Label>
                     <Form.Control 
                      type='number' 
                      name='creditCard' 
@@ -143,13 +160,20 @@ class Registration extends Component {
                      onChange={this.handleChange} 
                      required />
                 </Form.Group>
-
-               {this.state.isFiled &&  
-                
-                <Button variant="primary" type="submit" style={{display: 'block'}}>
+                <div className="panel panel-default">
+                   {/* <FormErrors formErrors={this.state.formErrors} /> */}
+                </div>
+               
+                <Button variant="primary" type="submit"  disabled={!this.state.isFiled}>
                     Submit
                 </Button>
-                }
+
+             {/* { !this.state.isFiled && 
+                <Button variant="primary" type="submit"  disabled>
+                    Submit
+                </Button>
+                
+             } */}
                 </Form>
               
                     
