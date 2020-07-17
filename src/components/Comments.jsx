@@ -140,7 +140,7 @@ class Comments extends Component {
   }
 
   openProject = async (id) => {
-    const resp = await fetch('http://localhost:3457/products/' + id)
+    const resp = await fetch('http://localhost:3457/products/' + id + '/reviews')
     const result = await resp.json()
     //console.log(result)
     this.setState({
@@ -234,7 +234,16 @@ class Comments extends Component {
           </Button>
                     </Modal.Footer>
                   </Modal>
-                  <Modal show={this.state.show1} onHide={() => this.handleClose()}>
+                 
+                </>
+
+              )
+            }
+            )
+            }
+{this.state.projects.map((proj, i) => { 
+  return (
+<Modal show={this.state.show1} onHide={() => this.handleClose()}>
               <Modal.Header closeButton>
                 <Modal.Title>Comments</Modal.Title>
               </Modal.Header>
@@ -242,8 +251,8 @@ class Comments extends Component {
 
               <Modal.Body>
                 <ul style={{color: '#000', listStyle: 'none'}}>
-                  <li>{this.state.product.comment}</li>
-                  <li>{this.state.product.rate}</li>
+                  <li>Comment: {proj.comment}</li>
+                  <li>Rate: {proj.rate}</li>
                 </ul>
               </Modal.Body>
 
@@ -254,14 +263,8 @@ class Comments extends Component {
 
               </Modal.Footer>
             </Modal>
-                </>
-
-              )
-            }
-            )
-            }
-
-           
+  )
+           })}
            
 
           </Table>
