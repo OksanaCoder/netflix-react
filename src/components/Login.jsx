@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 class Login extends Component {
     constructor(props) {
@@ -7,85 +7,50 @@ class Login extends Component {
 
         this.state = {
            
-            email: null,
-            password: null,
-            confirmPassword: null,
-            errors: {
+            email: '',
+            password: '',
+            confirmPassword: '',
+            errors : {
                 email: '',
-                password: '',
+                password: '', 
                 confirmPassword: ''
-              }
-            
+            },
+            emailValid: false,
+            passwordValid: false,
+            confirmPasswordValid: false,
+            formValid: false
         }
         this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    // handleSubmit =  (event) => {
-    //     console.log('submitted');
-    //     event.preventDefault();
+    
 
-    //     this.setState({
-    //         [event.target.name] : event.target.value
-    //     })
-    // }
-        handleSubmit = (event) => {
-            event.preventDefault();
-            if(validateForm(this.state.errors)) {
-              console.info('Valid Form')
-            }else{
-              console.error('Invalid Form')
+    handleChange (event){
+        console.log('email changed', this);
+      this.setState({
+         [event.target.name]: event.target.value,
+      },
+      
+      )
+     }
+
+        handleSubmit(event) {
+           event.preventDefault();
+    
+            console.log('form is submitted');
+
+          
+
+                this.setState({
+                    emailError: 'Invalid error',
+                })
             }
-            const validateForm = (errors) => {
-                let valid = true;
-                Object.values(errors).forEach(
-                  // if we have an error string set valid to false
-                  (val) => val.length > 0 && (valid = false)
-                );
-                return valid;
-              }
-          }
+              
       
      
     
-    handleChange = (event) => {
-    event.preventDefault();
-
-           const { name, value } = event.target
-           let errors = this.state.errors;
-
-           switch (email) {
-          
-            case 'email': 
-              errors.email = 
-                validEmailRegex.test(value)
-                  ? ''
-                  : 'Email is not valid!';
-              break;
-            case 'password': 
-              errors.password = 
-                value.length < 8
-                  ? 'Password must be 8 characters long!'
-                  : '';
-              break;
-            default:
-              break;
-          }
-  
-          const validEmailRegex = 
-          RegExp('/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i');
-          this.setState({errors, [name]: value}, ()=> {
-              console.log(errors)
-          })
-        
-    }
-    // componentDidMount() {
-    //     const email = localStorage.getItem('email') === 'true';
-    //     const password = localStorage.getItem('password') === 'true';
-    //     const password_confirmation = localStorage.getItem('password_confirmation') === 'true';
-       
-    //     this.setState({ email, password, password_confirmation });
-    //   }
-    render(){
+    
+    render() {
         return ( 
             <div className='container text-white'>
                 <h5 className='mb-4 mt-5'>Registration form</h5>
@@ -99,10 +64,17 @@ class Login extends Component {
                     placeholder='Email' 
                     value={this.state.email} 
                     onChange={this.handleChange} 
-                    required />
+                    required 
+                    />
                     <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                     </Form.Text>
+                    <div style={{color: 'red', fontSize: '10px'}}>{this.state.errors.email}</div>
+                   {this.state.errors.email && 
+                        <Alert variant='danger'>
+                            Please, fill the field!
+                        </Alert>
+                    }
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
@@ -113,7 +85,13 @@ class Login extends Component {
                      placeholder='Password' 
                      value={this.state.password} 
                      onChange={this.handleChange} 
-                     required />
+                     required />    
+                 <div style={{color: 'red', fontSize: '10px'}}>{this.state.errors.password}</div>
+                 {this.state.errors.email && 
+                        <Alert variant='danger'>
+                            The password has to be no less than 6 ..
+                        </Alert>
+                    }
                 </Form.Group>
                 
                 <Form.Group controlId="formBasicPassword">
@@ -125,16 +103,18 @@ class Login extends Component {
                      value={this.state.confirmPassword} 
                      onChange={this.handleChange} 
                      required />
+                    <div style={{color: 'red', fontSize: '10px'}}>{this.state.errors.confirmPassword}</div>
+                    {this.state.errors.email && 
+                        <Alert variant='danger'>
+                            The password does not match!
+                        </Alert>
+                    }
                 </Form.Group>
                 
                
              
-               
-                <div className="panel panel-default">
-                   {/* <FormErrors formErrors={this.state.formErrors} /> */}
-                </div>
-               
-                <Button variant="primary" type="submit"  disabled={!this.state.isFiled}>
+             
+                <Button variant="primary" type="submit">
                     Submit
                 </Button>
 

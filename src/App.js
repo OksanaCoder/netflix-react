@@ -8,6 +8,7 @@ import Btn from './components/Btn';
 import Comments from './components/Comments';
 import Details from './components/Details';
 import Registration from './components/Registration';
+import Cart from './components/Cart';
 import Login from './components/Login';
 import { BrowserRouter, Route  } from 'react-router-dom';
 
@@ -44,6 +45,7 @@ class App extends Component {
           <Route path="/details/:imdbID" component={Details}/>
           <Route path='/registration' exact component={Registration}/>
           <Route path='/login' exact component={Login}/>
+          <Route path='/cart' exact component={Cart}/>
       </BrowserRouter>
     );
 

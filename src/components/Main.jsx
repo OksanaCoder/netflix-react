@@ -6,32 +6,32 @@ class Main extends Component {
     
      state = {
         genre : null,
-        harryPotterMovies: [],
-        spiderMovies: [],
-        starWarsMovies: [],
+        sport: [],
+        beauty: [],
+        computers: [],
         loading: true,
         errMess: '',
-        movies: []
+        goods: []
     }
 
-    url = "http://www.omdbapi.com/?apikey=34fd8839";
+    url = "http://localhost:3457/products";
     
     componentDidMount = () => {
         Promise.all([
-            fetch(this.url + "&s=harry%20potter")
+            fetch(this.url + "?category=health")
             .then((response) => response.json())
             .then((responseObject) =>
-              this.setState({ harryPotterMovies : responseObject.Search })
+              this.setState({ sport : responseObject })
             ),
-            fetch(this.url + "&s=spider%20man")
+            fetch(this.url + "?category=beauty")
             .then((response) => response.json())
             .then((responseObject) =>
-              this.setState({ spiderMovies : responseObject.Search })
+              this.setState({ beauty : responseObject })
             ),
-            fetch(this.url + "&s=star%20wars")
+            fetch(this.url + "?category=computers")
             .then((response) => response.json())
             .then((responseObject) =>
-              this.setState({ starWarsMovies : responseObject.Search })
+              this.setState({ computers : responseObject })
             ),
            ])
             .catch((err) => {
@@ -46,7 +46,7 @@ class Main extends Component {
     //     fetch(this.url + searchString)
     //     .then((response) => response.json())
     //     .then((responseObject) =>
-    //     this.setState({ searchedMovies: responseObject.Search})
+    //     this.setState({ searchedgoods: responseObject.Search})
     //     );
     // };
 
@@ -57,18 +57,18 @@ class Main extends Component {
         <div className='container'>
             <div className='row text-white pt-4 text-left'>
                 <div className='col-12 d-flex justify-content-between'>
-                    <h5>{this.props.title}</h5>
+                    <h5>Categories</h5>
                 
              
                  <Dropdown className='drop-select text-left'>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                      Genres
+                      Filter
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.setState({genre: 'harryPotterMovies'})}>HarryPotter Movies</Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.setState({genre: 'spiderMovies'})}>SpiderMan Movies</Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.setState({genre: 'starWarsMovies'})}>StarWars Movies</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({genre: 'sport'})}>Health & Household</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({genre: 'beauty'})}>Beauty & Personal Care</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({genre: 'computers'})}>Computers & Tablets</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.setState({genre: 'all'})}>All</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -81,26 +81,26 @@ class Main extends Component {
                   
 
                 <RowOfItems 
-                movies={this.state.harryPotterMovies.slice(0, 6)}
-                title="Harry Potter"
+                goods={this.state.sport}
+                title="Health & Household"
                 />
                 <RowOfItems 
-                movies={this.state.spiderMovies.slice(0, 6)} 
-                title="SpiderMan"
+                goods={this.state.beauty} 
+                title="Beauty & Personal care"
                 />
                 <RowOfItems 
-                movies={this.state.starWarsMovies.slice(0, 6)}
-                title="StarWars"
+                goods={this.state.computers}
+                title="Computers & Tablets"
 
                 />
                 </div>
             )} 
             {
-                this.state.genre === 'harryPotterMovies' && (
+                this.state.genre === 'sport' && (
                     <div className='container'>
                          <RowOfItems 
-                        movies={this.state.harryPotterMovies.slice(0, 6)}
-                        title="Harry Potter"
+                        goods={this.state.sport}
+                        title="Sport"
                      />  
                    </div>
                  )
@@ -108,22 +108,22 @@ class Main extends Component {
             }
              {
                  
-                this.state.genre === 'spiderMovies' && ( 
+                this.state.genre === 'beauty' && ( 
                     <div className='container'>
                         <RowOfItems 
-                        movies={this.state.spiderMovies.slice(0, 6)}
-                        title="SpiderMan"
+                        goods={this.state.beauty}
+                        title="Beauty"
                 />   
                 </div>
                 )
     
             }
              {
-                this.state.genre === 'starWarsMovies' && (
+                this.state.genre === 'computers' && (
                     <div className='container'>
                      <RowOfItems 
-                    movies={this.state.starWarsMovies.slice(0, 6)}
-                    title="Harry Potter"
+                    goods={this.state.computers}
+                    title="Computers"
                 />  
                 </div>
                  )
@@ -133,16 +133,16 @@ class Main extends Component {
                 this.state.genre === 'all' && ( 
                  <div className='container'>
                     <RowOfItems 
-                movies={this.state.harryPotterMovies.slice(0, 6)}
-                title="Harry Potter"
+                goods={this.state.sport}
+                title="Sport"
                 />
                 <RowOfItems 
-                movies={this.state.spiderMovies.slice(0, 6)} 
-                title="SpiderMan"
+                goods={this.state.beauty} 
+                title="Beauty"
                 />
                 <RowOfItems 
-                movies={this.state.starWarsMovies.slice(0, 6)}
-                title="StarWars"
+                goods={this.state.computers}
+                title="Computers"
 
                 />
                </div>

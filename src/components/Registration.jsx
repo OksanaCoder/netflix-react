@@ -29,20 +29,14 @@ class Registration extends Component {
             [event.target.name] : event.target.value
         })
 
-        if (
-            this.state.email.length !== 0 &&
-            this.state.name.length 
-        ) {
-            this.setState({
-                isFiled: true
-            })
+        
         }
         //   const { email, password, password_confirmation } = this.state;
     //       localStorage.setItem('email', email);
     //       localStorage.setItem('password', password);
     //       localStorage.setItem('password_confirnation', password_confirmation);
     // 
-    }
+    
     handleChange(event) {
        this.setState({
            [event.target.name] : event.target.value

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Details from './Details';
 
 
  class Comments extends Component {
@@ -43,6 +44,7 @@ import React, { Component } from 'react';
          
           <button className='btn btn-success' onClick={this.changeNumber}>Get random</button>
           <Random number={this.state.r}/>
+          {/* <Details elementID={this.props.imdbID}/> */}
           </div>
           </>
             );

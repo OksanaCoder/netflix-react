@@ -1,6 +1,22 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
 .App {
   text-align: center;
 }
+body {
+  font-family: 'Quicksand', sans-serif !important;
+}
+
+.searchTerm {
+     border: none;
+     border-radius: 50px !important;
+     padding: 10px;
+     height: 30px !important;
+     width: 200px;
+     outline: none;
+}
+
 body {
   background-color: #282c34 !important;
 }
