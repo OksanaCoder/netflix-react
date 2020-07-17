@@ -42,7 +42,7 @@ class App extends Component {
           <NavBar />
           <Route path="/" exact component={(props) => <Main title="TV Shows"/>}/>
           <Route path="/comments" exact component={(props) => <Comments />}/>
-          <Route path="/details/:imdbID" component={Details}/>
+          <Route path="/details/:id" component={Details}/>
           <Route path='/registration' exact component={Registration}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/cart' exact component={Cart}/>

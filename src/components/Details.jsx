@@ -7,17 +7,17 @@ import CommentItem from './CommentItem';
 
 class Details extends Component {
     state = {
-       movie: {},
+       product: {},
 
     }
-    url = "http://www.omdbapi.com/?apikey=34fd8839";
+    url = "http://localhost:3457/products";
 
     componentDidMount = () => {
-        console.log('props', this.props.match.params.imdbID)
+        console.log('props', this.props)
         Promise.all([
-            fetch(this.url + '&i=' + this.props.match.params.imdbID)
+            fetch(this.url + '?category=' + this.props.match.params.category)
             .then((response) => response.json())
-            .then((movie) => this.setState({movie: movie}))
+            .then((product) => this.setState({product: product}))
            ])
             .catch((err) => {
                 console.log('An error occucred:', err);
@@ -34,12 +34,12 @@ class Details extends Component {
                 <h5 style={{color: '#fff'}}>Details</h5>
              <Row>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
-                   <img src={this.state.movie.Poster} alt='movie img'></img>
+                   <img src={this.state.product.imageurl} alt='product img'></img>
                  </div>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
                      <Card>
                          <Card.Body>
-                    <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.movie.Title}</Card.Title>
+                    <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.product.name}</Card.Title>
                     <CommentItem />
                             
                          </Card.Body>
