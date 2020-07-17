@@ -13,9 +13,9 @@ class Details extends Component {
     url = "http://localhost:3457/products";
 
     componentDidMount = () => {
-        console.log('props', this.props)
+        console.log('props', this.props.match.params.id)
         Promise.all([
-            fetch(this.url + '?category=' + this.props.match.params.category)
+            fetch(this.url + '/' + this.props.match.params.id)
             .then((response) => response.json())
             .then((product) => this.setState({product: product}))
            ])
@@ -34,12 +34,17 @@ class Details extends Component {
                 <h5 style={{color: '#fff'}}>Details</h5>
              <Row>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
-                   <img src={this.state.product.imageurl} alt='product img'></img>
+                   <img style={{width: '200px', height: '400px', borderRadius: '10px'}} src={this.state.product.imageurl} alt='product img'></img>
+
+                   <Card.Title style={{color: '#fff'}}>{this.state.product.name}</Card.Title>
+                    <Card.Title style={{color: '#fff'}}>Price: <small> $ {this.state.product.price}</small></Card.Title>
+                    <Card.Title  style={{color: '#fff'}}>Category: <small>{this.state.product.category}</small></Card.Title>
+                  
                  </div>
                  <div className='col-sm-12 col-md-6 col-lg-6'>
                      <Card>
                          <Card.Body>
-                    <Card.Title className='mb-5' style={{color: '#000'}}>{this.state.product.name}</Card.Title>
+                
                     <CommentItem />
                             
                          </Card.Body>

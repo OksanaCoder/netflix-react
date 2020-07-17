@@ -12,11 +12,13 @@ class Comments extends Component {
       Mshow: false,
       show1: false,
 
-      student: {
+      product: {
         name: '',
-        surname: '',
-        email: '',
-        dateofbirth: '',
+        imageurl: '',
+        price: '',
+        category: '',
+        rate: '',
+        comment: '',
 
         submitted: false,
       }
@@ -25,21 +27,21 @@ class Comments extends Component {
   }
 
   componentDidMount = async () => {
-    const resp = await fetch('http://localhost:3457/comments')
+    const resp = await fetch('http://localhost:3457/products')
     const result = await resp.json()
     //console.log(result)
     this.setState({
       data: result
     })
-    console.log("props from student", this.props.match)
+    console.log("props from products", this.props.match)
   }
 
-  onChangeStudent = event => {
+  onChangeProduct = event => {
     console.log(event.target.name, event.target.value)
     this.setState({
       ...this.state,
-      student: {
-        ...this.state.student,
+      product: {
+        ...this.state.product,
         [event.target.name]: event.target.value
       }
 
@@ -49,8 +51,8 @@ class Comments extends Component {
   onChange = (event) => {
     console.log(event.target.name, event.target.value)
     this.setState({
-      student: {
-        ...this.state.student,
+      product: {
+        ...this.state.product,
         [event.target.name]: event.target.value
       }
 
@@ -61,13 +63,15 @@ class Comments extends Component {
     event.preventDefault()
     this.setState({ submitted: true })
     const data = {
-      name: this.state.student.name,
-      surname: this.state.student.surname,
-      email: this.state.student.email,
-      dateofbirth: this.state.student.dateofbirth,
+      name: this.state.product.name,
+      imageurl: this.state.product.imageurl,
+      price: this.state.product.price,
+      category: this.state.product.category,
+      comment: this.state.product.comment,
+      rate: this.state.product.rate
 
     }
-    const resp = await fetch('http://localhost:3456/users', {
+    const resp = await fetch('http://localhost:3457/products', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -75,14 +79,14 @@ class Comments extends Component {
       }
     })
     if (resp.ok) {
-      alert('New student added')
+      alert('New product added')
     }
     //console.log(resp)
   }
   delItem = async (id) => {
     // event.preventDefault()
 
-    const resp = await fetch('http://localhost:3456/users/' + id, {
+    const resp = await fetch('http://localhost:3457/products/' + id, {
       method: 'DELETE',
 
     })
@@ -95,10 +99,10 @@ class Comments extends Component {
   }
   openAndEdit = async (id) => {
 
-    const student = this.state.data.find(student => student._id === id)
+    const product = this.state.data.find(product => product._id === id)
     this.setState({
       show: true,
-      student: student
+      product: product
       // data : result
     })
   }
@@ -108,15 +112,15 @@ class Comments extends Component {
   editItem = async (id) => {
     const udatedData = {
       _id: id,
-      name: this.state.student.name,
-      surname: this.state.student.surname,
-      email: this.state.student.email,
-      dateofbirth: this.state.student.dateofbirth,
+      name: this.state.product.name,
+      imageurl: this.state.product.imageurl,
+      price: this.state.product.price,
+      category: this.state.product.category,
 
     }
     // this.setState({  data: udatedData  })
     // event.preventDefault()
-    const resp = await fetch('http://localhost:3456/users/' + id, {
+    const resp = await fetch('http://localhost:3457/products/' + id, {
       method: 'PUT',
       body: JSON.stringify(udatedData),
       headers: {
@@ -124,19 +128,19 @@ class Comments extends Component {
       }
     })
     //find the element into this.state.data
-    const oldStudent = this.state.data.find(x => x._id === id)
-    const index = this.state.data.indexOf(oldStudent)
-    const students = this.state.data
-    students[index] = udatedData
+    const oldproduct = this.state.data.find(x => x._id === id)
+    const index = this.state.data.indexOf(oldproduct)
+    const products = this.state.data
+    products[index] = udatedData
     //replace it and update the state
     this.setState({
-      data: students,
+      data: products,
       show: false
     })
   }
 
   openProject = async (id) => {
-    const resp = await fetch('http://localhost:3456/users/' + id)
+    const resp = await fetch('http://localhost:3457/products/' + id)
     const result = await resp.json()
     //console.log(result)
     this.setState({
@@ -148,19 +152,23 @@ class Comments extends Component {
   }
 
   render() {
-    console.log(this.state.projects)
-    // console.log("props from student", this.props)
+    console.log(this.state.products)
+    // console.log("props from product", this.props)
     return (
       <>
-      
-            <div className='container'>
-      
+       
+        
+
+       <div className='container'>
+
           <Table striped bordered hover className='mt-4' style={{background: '#fff'}}>
 
             <tr>
               <th>#</th>
-              <th>Product</th>
-              <th>Comment</th>
+              <th>Name</th>
+              <th>Img</th>
+              <th>Price</th>
+              <th>Category</th>
 
 
             </tr>
@@ -176,41 +184,40 @@ class Comments extends Component {
                   <tr>
                     <td>{i + 1}</td>
                     <td>{item.name}</td>
-                    <td>{item.comment}</td>
-                 
+                    <td><img style={{width: '100px'}} src={item.imageurl}></img></td>
+                    <td>$ {item.price}</td>
+                    <td>{item.category}</td>
 
                     <td><Button variant='danger' onClick={() => this.delItem(item._id)}>Remove</Button></td>
                     <td><Button variant='success' onClick={() => this.openAndEdit(item._id)}>Edit</Button></td>
-                    <td><Button variant='dark' onClick={() => this.openProject(item._id)}>Project</Button></td>
+                    <td><Button variant='dark' onClick={() => this.openProject(item._id)}>Reviews</Button></td>
                   </tr>
                   <Modal show={this.state.show} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Edit</Modal.Title>
+                      <Modal.Title>Edit user</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form className='mt-4 formSub' onSubmit={this.saveStudeent}>
                         <Form.Group>
                           <Form.Label>Name</Form.Label>
-                          <Form.Control name='name' onChange={this.onChangeStudent} value={this.state.student.name} type="text" placeholder="Enter name" />
+                          <Form.Control name='name' onChange={this.onChangeProduct} value={this.state.product.name} type="text" placeholder="Enter name" />
+                        </Form.Group>
+
+                        {/* <Form.Group>
+                          <Form.Label>Image</Form.Label>
+                          <img name='imageurl' onChange={this.onChangeProduct} value={this.state.product.imageurl} type="image" placeholder="Enter surname" />
+                        </Form.Group> */}
+
+                        <Form.Group>
+                          <Form.Label>Price</Form.Label>
+                          <Form.Control name='price' onChange={this.onChangeProduct} value={this.state.product.price} type="text" placeholder="Enter price" />
+                         
                         </Form.Group>
 
                         <Form.Group>
-                          <Form.Label>Comment</Form.Label>
-                          <Form.Control name='surname' onChange={this.onChangeStudent} value={this.state.student.comment} type="text" placeholder="Enter surname" />
-                        </Form.Group>
+                          <Form.Label>Category</Form.Label>
 
-                        <Form.Group>
-                          <Form.Label>Email</Form.Label>
-                          <Form.Control name='email' onChange={this.onChangeStudent} value={this.state.student.email} type="email" placeholder="Enter email" />
-                          <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-           </Form.Text>
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Date of Birth</Form.Label>
-
-                          <Form.Control name='dateofbirth' onChange={this.onChangeStudent} value={this.state.student.dateofbirth.split('T')[0]} type="date" />
+                          <Form.Control name='category' onChange={this.onChangeProduct} value={this.state.product.category} type="text" />
                         </Form.Group>
 
 
@@ -227,44 +234,17 @@ class Comments extends Component {
           </Button>
                     </Modal.Footer>
                   </Modal>
-
-                </>
-
-              )
-            }
-            )
-            }
-
-            {/* { this.state.data.projects.map((item, i) => {
-  return (  */}
-            <Modal show={this.state.show1} onHide={() => this.handleClose()}>
+                  <Modal show={this.state.show1} onHide={() => this.handleClose()}>
               <Modal.Header closeButton>
-                <Modal.Title>Project info</Modal.Title>
+                <Modal.Title>Comments</Modal.Title>
               </Modal.Header>
 
 
               <Modal.Body>
-                {/* <Table striped bordered hover className='mt-5'>
-      
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date of Creation</th>
-              
-                
-              </tr>
-            <tr>
-          <td>{i+1}</td>
-          <td>{item.projects.projects_name}</td>
-          <td>{item.projects.description}</td>
-         
-          
-          <td><Button variant='danger' onClick={() => this.delItem(item._id)}>Remove</Button></td>
-          <td><Button variant='success' onClick={() => this.openAndEdit(item._id)}>Edit</Button></td>
-          <td><Button variant='dark' onClick={() => this.openProject(item._id)}>Project</Button></td>
-          </tr>
-          </Table> */}
+                <ul style={{color: '#000', listStyle: 'none'}}>
+                  <li>{this.state.product.comment}</li>
+                  <li>{this.state.product.rate}</li>
+                </ul>
               </Modal.Body>
 
               <Modal.Footer>
@@ -274,8 +254,15 @@ class Comments extends Component {
 
               </Modal.Footer>
             </Modal>
-            {/* )
-})} */}
+                </>
+
+              )
+            }
+            )
+            }
+
+           
+           
 
           </Table>
           <Pagination style={{display: 'flex', justifyContent: 'center'}}>
